@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/layout :: head"></head>
+
+<body>
+	<header th:replace="fragments/layout :: header"></header>
+
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<div class="card">
+					<div class="card-header">오류 메시지</div>
+					<div class="card-body">
+					<div style="display: flex;">
+						<img alt="error" src="images/error.png">
+					</div>
+						<h1>이런! 오류가 발생했어요!</h1>
+						<h5 class="card-title" th:text="${title}">오류의 클래스</h5>
+						<p class="card-text" th:text="${errorMsg}">오류 메시지</p>
+						<a href="javascript:history.back()" class="btn btn-primary">이전 페이지로 돌아가기</a>
+						<a href="/" class="btn btn-danger">메인으로 돌아가기</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<footer th:replace="fragments/layout :: footer"></footer>
+</body>
+</html>
