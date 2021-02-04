@@ -6,10 +6,10 @@ public interface UserDAO {
 	public UserVO getUser(String userid);
 	public UserVO loginUser(String userid, String password);
 	public void insertUser(UserVO user);
-	public void Userlevel(String userid);
-	public void levelUP(int level,String userid);
-
+	public void updateEXP(String userid);//EXP증가
 	
+	public void levelUP(String userid);
 	
+	public int ExpForm(int level);
 	
 }

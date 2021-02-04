@@ -9,5 +9,9 @@ public interface UserService {
 	
 	public UserVO getUserInfo(String userid);
 	
-	public void UserExp(String userid);
+	public void ExpUp(String userid);
+	
+	public int ExpForm(int level);
+	
+	public void levelUp(String userid);
 }

@@ -36,15 +36,17 @@ public class UserDAOImpl implements UserDAO {
 		session.insert(ns + ".insertUser", user);
 	}	
 	@Override
-	public void Userlevel(String userid) {
-		session.update(ns+".updateEXP",userid);
+	public void updateEXP(String userid) {
+		session.update(ns+".updateEXP",userid);//Exp증가
+	}
+	
+	@Override
+	public void levelUP(String userid) {
+		session.update(ns+".updateLevel",userid);
+		
 	}
 	@Override
-	public void levelUP(int level, String userid) {
-		Map<String, Object> map = new HashMap<>();
-		map.put("level", level);
-		map.put("userid", userid);
-		session.update(ns+".updateLevel",map);
-		
+	public int ExpForm(int level) {
+		return session.selectOne(ns+".ExpForm", level);
 	}
 }

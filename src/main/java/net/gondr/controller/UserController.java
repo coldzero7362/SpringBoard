@@ -77,8 +77,12 @@ public class UserController {
 			model.addAttribute("msg", "로그인 실패, 아이디와 비밀번호를 확인하세요");
 			return "user/login";
 		}
+//		System.out.println(user.getExp());//user의 경험치값 가져오기(디버그)
+//		System.out.println(service.ExpForm(user.getLevel()));
 		
-		service.UserExp(loginDTO.getUserid());
+		service.ExpUp(loginDTO.getUserid());//경험치 증가
+		service.levelUp(loginDTO.getUserid());
+		
 		session.setAttribute("user", user);
 		return "redirect:/";
 	}

@@ -28,8 +28,22 @@ public class UserServiceImpl implements UserService{
 		dao.insertUser(user);
 	}
 	@Override
-	public void UserExp(String userid) {
-		dao.Userlevel(userid);
+	public void ExpUp(String userid) {
+		dao.updateEXP(userid);
 	}
 	
+	@Override
+	public int ExpForm(int level) {
+		return dao.ExpForm(level);
+	}
+	@Override
+	public void levelUp(String userid) {
+		int userLevel = dao.getUser(userid).getLevel();
+		int goalExp = dao.ExpForm(userLevel);
+		int userExp = dao.getUser(userid).getExp();
+		if(userExp >= goalExp) {
+			dao.levelUP(userid);
+		}
+		
+	}
 }

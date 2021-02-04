@@ -21,6 +21,12 @@
 		UPDATE spring_users SET exp = exp+5 WHERE userid = #{userid}
 	</update>
 	<update id="updateLevel">
-		UPDATE spring_users SET level = #{level} WHERE userid =  #{userid}
+		UPDATE spring_users SET  level = level + 1,exp = 0 WHERE userid =  #{userid}
+		
 	</update>
+	
+	<select id="ExpForm" resultType="int">
+		SELECT exp FROM level WHERE Lv = #{level}
+	</select>
+
 </mapper>
