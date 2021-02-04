@@ -1,0 +1,35 @@
+package net.gondr.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import net.gondr.dao.UserDAO;
+import net.gondr.domain.UserVO;
+
+@Service
+public class UserServiceImpl implements UserService{
+	@Autowired
+	private UserDAO dao;
+	
+	@Override
+	public UserVO getUserInfo(String userid) {
+		return dao.getUser(userid);
+		
+	}
+	@Override
+	public UserVO login(String userid, String password) {
+		// TODO Auto-generated method stub
+		
+		return dao.loginUser(userid, password);
+	}
+	@Override
+	public void register(UserVO user) {
+		// TODO Auto-generated method stub
+		dao.insertUser(user);
+	}
+	@Override
+	public void UserExp(String userid) {
+		dao.Userlevel(userid);
+	}
+	
+}
