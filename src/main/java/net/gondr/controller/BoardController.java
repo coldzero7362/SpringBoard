@@ -22,6 +22,7 @@ import net.gondr.domain.BoardVO;
 import net.gondr.domain.UploadResponse;
 import net.gondr.domain.UserVO;
 import net.gondr.service.BoardService;
+import net.gondr.service.UserService;
 import net.gondr.util.FileUtil;
 import net.gondr.util.MediaUtil;
 import net.gondr.validator.BoardValidator;
@@ -34,6 +35,8 @@ public class BoardController {
 	
 	@Autowired
 	private BoardService service;
+	@Autowired
+	private UserService userService;
 	
 	private BoardValidator validator = new BoardValidator();
 	
@@ -58,6 +61,7 @@ public class BoardController {
 		board.setContent(clean);
 		
 		service.writeArticle(board);
+		userService.ExpUp(user.getUserid());
 		return "redirect:/board"; //글목록으로 이동
 	}
 	

@@ -17,10 +17,11 @@
 	<delete id="delete">
 		DELETE FROM spring_boards WHERE id = #{id}
 	</delete>
-	<select id="view" resultType="BoardVO">
-		SELECT * FROM spring_boards WHERE id = #{id}
-	</select>
 	<select id="cnt" resultType="Integer">
 		SELECT count(*) FROM spring_boards
+	</select>
+	<select id="view" resultType="BoardVO">
+		SELECT b.*,u.name,u.img,u.level FROM spring_boards AS b,
+		spring_users AS u WHERE id = #{id} AND userid = writer
 	</select>
 </mapper>

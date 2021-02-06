@@ -8,7 +8,29 @@ public class BoardVO {
 	private String content;
 	private String writer;
 	private Date writeDate;
+	private String img;
+	private String name;
+	private Integer level;
 	
+	
+	public String getImg() {
+		return img;
+	}
+	public void setImg(String img) {
+		this.img = img;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public Integer getLevel() {
+		return level;
+	}
+	public void setLevel(Integer level) {
+		this.level = level;
+	}
 	public Integer getId() {
 		return id;
 	}
