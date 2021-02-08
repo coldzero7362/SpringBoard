@@ -1,5 +1,7 @@
 package net.gondr.controller;
 
+import java.util.List;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -14,11 +16,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.nhncorp.lucy.security.xss.LucyXssFilter;
 import com.nhncorp.lucy.security.xss.XssSaxFilter;
 
 import net.gondr.domain.BoardVO;
+import net.gondr.domain.Criteria;
 import net.gondr.domain.UploadResponse;
 import net.gondr.domain.UserVO;
 import net.gondr.service.BoardService;
@@ -62,7 +66,7 @@ public class BoardController {
 		
 		service.writeArticle(board);
 		userService.ExpUp(user.getUserid());
-		return "redirect:/board"; //글목록으로 이동
+		return "redirect:/board/list"; //글목록으로 이동
 	}
 	
 	@RequestMapping(value="upload", method=RequestMethod.POST)
@@ -95,9 +99,38 @@ public class BoardController {
 			return upResponse;
 	}
 	@RequestMapping(value="view/{id}",method=RequestMethod.GET)
-	public String viewArticle(@PathVariable Integer id, Model model) {
+	public String viewArticle(@PathVariable Integer id, Model model, HttpSession session) {
+		UserVO user = (UserVO) session.getAttribute("user");
 		BoardVO board = service.viewArticle(id);
 		model.addAttribute("board",board);
+		model.addAttribute("user", user);
 		return "board/view";
 	}
+	@RequestMapping(value="list",method=RequestMethod.GET)
+	public String viewList(Criteria c, Model model) {
+//		List<BoardVO> list = service.getArticleList((c.getPage()-1) * c.getPerPageNum(), c.getPerPageNum());
+		List<BoardVO> list = service.getCriteriaList(c);
+		model.addAttribute("list",list);
+		
+		Integer cnt =  service.countCriteria(c);
+		c.calculate(cnt);//계산이 끝나면 c에는 페이지네이션 제작에 필요한 변수들이 들어가있게 된다.
+		model.addAttribute("c",c);
+		return "board/list";
+	}
+	
+	@RequestMapping(value="delete/{id}", method=RequestMethod.GET)
+	public String deleteArticle(@PathVariable("id") Integer id, HttpSession session, RedirectAttributes rttr) {
+		UserVO user = (UserVO)session.getAttribute("user");
+		BoardVO data = service.viewArticle(id);
+		
+		if(!user.getUserid().equals(data.getWriter())) {
+			rttr.addFlashAttribute("msg", "삭제 권한이 없습니다.");
+			return "redirect:/board/view/" + data.getId();	
+		}
+		
+		service.deleteArticle(id);
+		rttr.addFlashAttribute("msg", "성공적으로 삭제되었습니다.");
+		return "redirect:/board/list";
+	}
+
 }

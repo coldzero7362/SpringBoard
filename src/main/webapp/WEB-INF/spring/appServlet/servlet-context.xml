@@ -57,6 +57,7 @@
 		</interceptor>
 		<interceptor>
 			<mapping path="/board/write"/>
+			<mapping path="/board/delete" />
 			<beans:ref bean="authInter"/>
 		</interceptor>
 	</interceptors>

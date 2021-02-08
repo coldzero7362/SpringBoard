@@ -8,6 +8,7 @@ public class BoardVO {
 	private String content;
 	private String writer;
 	private Date writeDate;
+	
 	private String img;
 	private String name;
 	private Integer level;
